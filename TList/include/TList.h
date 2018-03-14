@@ -235,7 +235,7 @@ bool operator >(const TMonom&T1, const TMonom&T2)
 
 bool operator ==(const TMonom&T1, const TMonom&T2)
 {
-	if ((T1.x == T2.x) && (T1.y == T1.y) && (T1.z == T2.z)) return true;
+	if ((T1.x == T2.x) && (T1.y == T2.y) && (T1.z == T2.z)) return true;
 	else return false;
 }
 

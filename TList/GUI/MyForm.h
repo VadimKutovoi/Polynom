@@ -444,10 +444,14 @@ private: System::Void minus_Click(System::Object^  sender, System::EventArgs^  e
 private: System::Void multonconst_Click(System::Object^  sender, System::EventArgs^  e) { 
 		poly1 *= Convert::ToInt32(Constant->Text);
 
-		for (poly1.reset();!poly1.isEnd();poly1.goNext())
+		if (Convert::ToInt32(Constant->Text) == 0) result->Text = "0";
+		else
 		{
-			result->Text += poly1.getElem().coeff + "*x^" + poly1.getElem().x + "*y^" + poly1.getElem().y + "*z^" + poly1.getElem().z;
-			if (!poly1.isLast()) result->Text += "+";
+			for (poly1.reset();!poly1.isEnd();poly1.goNext())
+			{
+				result->Text += poly1.getElem().coeff + "*x^" + poly1.getElem().x + "*y^" + poly1.getElem().y + "*z^" + poly1.getElem().z;
+				if (!poly1.isLast()) result->Text += "+";
+			}
 		}
 }
 private: System::Void multonmonom_Click(System::Object^  sender, System::EventArgs^  e) {
