@@ -282,6 +282,17 @@ public:
 		for (reset();!isEnd();goNext()) pCurr->val.coeff *= c;
 	}
 
+	void operator *= (TMonom TM)
+	{
+		for (reset();!isEnd();goNext())
+		{
+			pCurr->val.coeff *= TM.coeff;
+			pCurr->val.x *= TM.x;
+			pCurr->val.y *= TM.y;
+			pCurr->val.z *= TM.z;
+		}
+	}
+
 	void operator += (TPolynom TM)
 	{
 		TM.reset();
@@ -298,6 +309,38 @@ public:
 					TM.goNext();
 				}
 				else 
+				{
+					goNext();
+					TM.goNext();
+				}
+			}
+			else
+				if (pCurr->val < TM.pCurr->val)
+				{
+					insCurr(TM.pCurr->val);
+					TM.goNext();
+				}
+				else
+					goNext();
+		}
+	}
+
+	void operator -= (TPolynom TM)
+	{
+		TM.reset();
+		reset();
+
+		while (!isEnd() || !TM.isEnd())
+		{
+			if (pCurr->val == TM.pCurr->val)
+			{
+				pCurr->val.coeff -= TM.pCurr->val.coeff;
+				if (pCurr->val.coeff == 0)
+				{
+					delCurr();
+					TM.goNext();
+				}
+				else
 				{
 					goNext();
 					TM.goNext();

@@ -1,4 +1,4 @@
-#include "C:\Users\sirku\Desktop\TList-master\include\TList.h"
+#include "C:\Users\kutovoj.v\Desktop\Polynom\TList\include\TList.h"
 
 int main()
 {

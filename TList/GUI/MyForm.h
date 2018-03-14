@@ -1,5 +1,5 @@
 #pragma once
-#include"C:\Users\sirku\Desktop\TList-master\include\TList.h"
+#include"C:\Users\kutovoj.v\Desktop\Polynom\TList\include\TList.h"
 #include <msclr\marshal_cppstd.h>
 
 namespace GUI {
@@ -61,6 +61,10 @@ namespace GUI {
 	private: System::Windows::Forms::Label^  label6;
 	private: System::Windows::Forms::Button^  plus;
 	private: System::Windows::Forms::Button^  minus;
+	private: System::Windows::Forms::TextBox^  Constant;
+	private: System::Windows::Forms::Label^  constlabel;
+	private: System::Windows::Forms::Button^  multonconst;
+	private: System::Windows::Forms::Button^  multonmonom;
 
 	protected: 
 
@@ -96,6 +100,10 @@ namespace GUI {
 			this->label6 = (gcnew System::Windows::Forms::Label());
 			this->plus = (gcnew System::Windows::Forms::Button());
 			this->minus = (gcnew System::Windows::Forms::Button());
+			this->Constant = (gcnew System::Windows::Forms::TextBox());
+			this->constlabel = (gcnew System::Windows::Forms::Label());
+			this->multonconst = (gcnew System::Windows::Forms::Button());
+			this->multonmonom = (gcnew System::Windows::Forms::Button());
 			this->SuspendLayout();
 			// 
 			// textBox1
@@ -296,6 +304,56 @@ namespace GUI {
 			this->minus->TabIndex = 20;
 			this->minus->Text = L"-";
 			this->minus->UseVisualStyleBackColor = false;
+			this->minus->Click += gcnew System::EventHandler(this, &MyForm::minus_Click);
+			// 
+			// Constant
+			// 
+			this->Constant->Location = System::Drawing::Point(4, 48);
+			this->Constant->Name = L"Constant";
+			this->Constant->Size = System::Drawing::Size(20, 20);
+			this->Constant->TabIndex = 21;
+			// 
+			// constlabel
+			// 
+			this->constlabel->AutoSize = true;
+			this->constlabel->Font = (gcnew System::Drawing::Font(L"Verdana", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->constlabel->ForeColor = System::Drawing::Color::White;
+			this->constlabel->Location = System::Drawing::Point(30, 51);
+			this->constlabel->Name = L"constlabel";
+			this->constlabel->Size = System::Drawing::Size(15, 13);
+			this->constlabel->TabIndex = 22;
+			this->constlabel->Text = L"C";
+			// 
+			// multonconst
+			// 
+			this->multonconst->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
+			this->multonconst->BackColor = System::Drawing::Color::CornflowerBlue;
+			this->multonconst->Font = (gcnew System::Drawing::Font(L"Verdana", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->multonconst->ForeColor = System::Drawing::SystemColors::ControlLightLight;
+			this->multonconst->Location = System::Drawing::Point(61, 41);
+			this->multonconst->Name = L"multonconst";
+			this->multonconst->Size = System::Drawing::Size(73, 32);
+			this->multonconst->TabIndex = 23;
+			this->multonconst->Text = L"*";
+			this->multonconst->UseVisualStyleBackColor = false;
+			this->multonconst->Click += gcnew System::EventHandler(this, &MyForm::multonconst_Click);
+			// 
+			// multonmonom
+			// 
+			this->multonmonom->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
+			this->multonmonom->BackColor = System::Drawing::Color::CornflowerBlue;
+			this->multonmonom->Font = (gcnew System::Drawing::Font(L"Verdana", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->multonmonom->ForeColor = System::Drawing::SystemColors::ControlLightLight;
+			this->multonmonom->Location = System::Drawing::Point(371, 109);
+			this->multonmonom->Name = L"multonmonom";
+			this->multonmonom->Size = System::Drawing::Size(101, 43);
+			this->multonmonom->TabIndex = 24;
+			this->multonmonom->Text = L"*";
+			this->multonmonom->UseVisualStyleBackColor = false;
+			this->multonmonom->Click += gcnew System::EventHandler(this, &MyForm::multonmonom_Click);
 			// 
 			// MyForm
 			// 
@@ -303,6 +361,10 @@ namespace GUI {
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::Color::RoyalBlue;
 			this->ClientSize = System::Drawing::Size(608, 420);
+			this->Controls->Add(this->multonmonom);
+			this->Controls->Add(this->multonconst);
+			this->Controls->Add(this->constlabel);
+			this->Controls->Add(this->Constant);
 			this->Controls->Add(this->minus);
 			this->Controls->Add(this->plus);
 			this->Controls->Add(this->label6);
@@ -367,7 +429,40 @@ namespace GUI {
 		for (poly1.reset();!poly1.isEnd();poly1.goNext())
 		{
 			result->Text += poly1.getElem().coeff + "*x^" + poly1.getElem().x + "*y^" + poly1.getElem().y + "*z^" + poly1.getElem().z;
-			if (!poly1.isLast()) Polynom1->Text += "+";
+			if (!poly1.isLast()) result->Text += "+";
+		}
+}
+private: System::Void minus_Click(System::Object^  sender, System::EventArgs^  e) {
+		poly1 -= poly2;
+
+		for (poly1.reset();!poly1.isEnd();poly1.goNext())
+		{
+			result->Text += poly1.getElem().coeff + "*x^" + poly1.getElem().x + "*y^" + poly1.getElem().y + "*z^" + poly1.getElem().z;
+			if (!poly1.isLast()) result->Text += "+";
+		}
+}
+private: System::Void multonconst_Click(System::Object^  sender, System::EventArgs^  e) { 
+		poly1 *= Convert::ToInt32(Constant->Text);
+
+		for (poly1.reset();!poly1.isEnd();poly1.goNext())
+		{
+			result->Text += poly1.getElem().coeff + "*x^" + poly1.getElem().x + "*y^" + poly1.getElem().y + "*z^" + poly1.getElem().z;
+			if (!poly1.isLast()) result->Text += "+";
+		}
+}
+private: System::Void multonmonom_Click(System::Object^  sender, System::EventArgs^  e) {
+		
+		inp.coeff = Convert::ToInt32(textBox6->Text);
+		inp.x = Convert::ToInt32(textBox1->Text);
+		inp.y = Convert::ToInt32(textBox5->Text);
+		inp.z = Convert::ToInt32(textBox4->Text);
+
+		poly1 *= inp;
+
+		for (poly1.reset();!poly1.isEnd();poly1.goNext())
+		{
+			result->Text += poly1.getElem().coeff + "*x^" + poly1.getElem().x + "*y^" + poly1.getElem().y + "*z^" + poly1.getElem().z;
+			if (!poly1.isLast()) result->Text += "+";
 		}
 }
 };
